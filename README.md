@@ -1,28 +1,18 @@
-# Template Plugin
+# WorldProtection
 
-Here is a simple project for the quick creation of minecraft plugin.
-Works from version 1.8 to version 1.19+
+Plugin developed for the management of builder on a single server. The builders will be OP but will have access to only
+one world.
+They will be able to add and remove players from their world to help them build.
 
-Documentation: https://drawerPlugin.groupez.dev/
+## Commands
 
-# GroupeZ 
+- `/worldprotection (/wp)` - worldprotection.use - Show commands
+- `/worldprotection reload` - worldprotection.reload - Reload configurations files
+- `/worldprotection create <player>` - worldprotection.create - Create a new world
+- `/worldprotection teleport <world>` - worldprotection.teleport - Teleport to an allowed world
+- `/worldprotection add <player>` - worldprotection.add - Add a player to your world
+- `/worldprotection remove <player>` - worldprotection.remove - Remove a player to your world
+- `/worldprotection list` - worldprotection.list - Show player in your world
 
-https://groupez.dev is a marketplace that allows you to sell your plugins without any charge !
-
-## Features
-
-* Commands
-* TabCompleter
-* Inventories
-* Json file
-* Useful function (in the class ZUtils)
-* ItemBuilder
-* CooldownBuilder
-* TimerBuilder
-* Pagination
-* Inventory button
-* Custom Event
-* YML Loader (itemstack and button)
-* Scoreboard (https://github.com/MrMicky-FR/FastBoard)
-* Placeholder UTILS
+The create command is only executable by the console and by the whitelist players in the config.json file
 
