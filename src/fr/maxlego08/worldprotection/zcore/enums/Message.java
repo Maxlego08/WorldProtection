@@ -38,6 +38,8 @@ public enum Message {
     DESCRIPTION_RELOAD("Reload configuration files"),
     DESCRIPTION_CREATE("Create a new world"),
     DESCRIPTION_ADD("Create a new world"),
+    DESCRIPTION_RULES("Show world rules"),
+    DESCRIPTION_SET_RULE("Change world rules"),
     DESCRIPTION_REMOVE("Create a new world"),
     DESCRIPTION_LIST("Create a new world"),
 
@@ -54,6 +56,8 @@ public enum Message {
     WORLD_REMOVE_SUCCESS("&aYou just removed the &f%player%&a player in your world."),
     WORLD_LIST("&aPlayers&8: &f%players%"),
     WORLD_LIST_EMPTY("&aPlayers&8: &cEmpty"),
+    WORLD_RULES_SET("&aYou just set the rule &f%rule% &ato &7%value%&a."),
+    WORLD_RULES_INFO("&f%rule% &8: &7%value%"),
 
     ;
 

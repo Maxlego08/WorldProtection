@@ -1,6 +1,8 @@
 package fr.maxlego08.worldprotection;
 
 import fr.maxlego08.worldprotection.listener.ListenerAdapter;
+import fr.maxlego08.worldprotection.rules.Rules;
+import fr.maxlego08.worldprotection.rules.WorldRules;
 import fr.maxlego08.worldprotection.save.Config;
 import fr.maxlego08.worldprotection.save.PlayerWorlds;
 import fr.maxlego08.worldprotection.world.VoidGenerator;
@@ -307,5 +309,24 @@ public class WorldManager extends ListenerAdapter {
         } else {
             message(player, Message.WORLD_LIST, "%players%", toList(playerWorld.getAllowedPlayers().stream().map(Bukkit::getOfflinePlayer).map(OfflinePlayer::getName).collect(Collectors.toList())), "§f", "§7");
         }
+    }
+
+    public void setWorldRules(Player player, WorldRules worldRules, Rules rules) {
+
+        if (doesNotHaveWorld(player)) return;
+
+        PlayerWorld playerWorld = plugin.getWorldManager().getWorld(player).get();
+        playerWorld.getRules().put(worldRules, rules);
+
+        message(player, Message.WORLD_RULES_SET, "%rule%", name(worldRules.name()), "%value%", name(rules.name()));
+    }
+
+    public void sendRules(Player player) {
+
+        if (doesNotHaveWorld(player)) return;
+
+        PlayerWorld playerWorld = plugin.getWorldManager().getWorld(player).get();
+        playerWorld.getRules().forEach((worldRule, rule) -> message(player, Message.WORLD_RULES_INFO, "%rule%", name(worldRule.name()), "%value%", (rule == Rules.ALLOWED ? "§a" : "§c") + name(rule.name())));
+
     }
 }

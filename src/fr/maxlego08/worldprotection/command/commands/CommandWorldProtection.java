@@ -7,21 +7,23 @@ import fr.maxlego08.worldprotection.zcore.utils.commands.CommandType;
 
 public class CommandWorldProtection extends VCommand {
 
-	public CommandWorldProtection(WorldProtectionPlugin plugin) {
-		super(plugin);
-		this.setPermission(Permission.WORLDPROTECTION_USE);
-		this.addSubCommand(new CommandWorldProtectionReload(plugin));
-		this.addSubCommand(new CommandWorldProtectionCreateWorld(plugin));
-		this.addSubCommand(new CommandWorldProtectionTeleport(plugin));
-		this.addSubCommand(new CommandWorldProtectionAdd(plugin));
-		this.addSubCommand(new CommandWorldProtectionRemove(plugin));
-		this.addSubCommand(new CommandWorldProtectionList(plugin));
-	}
+    public CommandWorldProtection(WorldProtectionPlugin plugin) {
+        super(plugin);
+        this.setPermission(Permission.WORLDPROTECTION_USE);
+        this.addSubCommand(new CommandWorldProtectionReload(plugin));
+        this.addSubCommand(new CommandWorldProtectionCreateWorld(plugin));
+        this.addSubCommand(new CommandWorldProtectionTeleport(plugin));
+        this.addSubCommand(new CommandWorldProtectionAdd(plugin));
+        this.addSubCommand(new CommandWorldProtectionRemove(plugin));
+        this.addSubCommand(new CommandWorldProtectionList(plugin));
+        this.addSubCommand(new CommandWorldProtectionShowRules(plugin));
+        this.addSubCommand(new CommandWorldProtectionSetRule(plugin));
+    }
 
-	@Override
-	protected CommandType perform(WorldProtectionPlugin plugin) {
-		syntaxMessage();
-		return CommandType.SUCCESS;
-	}
+    @Override
+    protected CommandType perform(WorldProtectionPlugin plugin) {
+        syntaxMessage();
+        return CommandType.SUCCESS;
+    }
 
 }

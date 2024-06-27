@@ -13,6 +13,8 @@ They will be able to add and remove players from their world to help them build.
 - `/worldprotection add <player>` - worldprotection.add - Add a player to your world
 - `/worldprotection remove <player>` - worldprotection.remove - Remove a player to your world
 - `/worldprotection list` - worldprotection.list - Show player in your world
+- `/worldprotection setrule <rule> <action>` - worldprotection.setrule - Change world rules
+- `/worldprotection rules` - worldprotection.rules - Show world rules
 
 The create command is only executable by the console and by the whitelist players in the config.json file
 
