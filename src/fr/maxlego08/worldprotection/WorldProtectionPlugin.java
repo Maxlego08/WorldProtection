@@ -31,6 +31,7 @@ public class WorldProtectionPlugin extends ZPlugin {
 
         this.registerCommand("worldprotection", new CommandWorldProtection(this), "wp");
         this.addListener(this.worldManager);
+        this.addListener(new WorldListener(this.worldManager));
 
         this.addSave(Config.getInstance());
         this.addSave(new MessageLoader(this));
