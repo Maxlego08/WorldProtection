@@ -12,7 +12,10 @@ public class CommandWorldProtection extends VCommand {
 		this.setPermission(Permission.WORLDPROTECTION_USE);
 		this.addSubCommand(new CommandWorldProtectionReload(plugin));
 		this.addSubCommand(new CommandWorldProtectionCreateWorld(plugin));
-		this.addSubCommand(new CommandWorldProtectionCreateTeleport(plugin));
+		this.addSubCommand(new CommandWorldProtectionTeleport(plugin));
+		this.addSubCommand(new CommandWorldProtectionAdd(plugin));
+		this.addSubCommand(new CommandWorldProtectionRemove(plugin));
+		this.addSubCommand(new CommandWorldProtectionList(plugin));
 	}
 
 	@Override

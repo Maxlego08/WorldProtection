@@ -856,7 +856,7 @@ public abstract class ZUtils extends MessageUtils {
         if (list.size() == 1) return list.get(0);
         StringBuilder str = new StringBuilder();
         for (int a = 0; a != list.size(); a++) {
-            if (a == list.size() - 1) str.append(color).append(" et ").append(color2);
+            if (a == list.size() - 1) str.append(color).append(" and ").append(color2);
             else if (a != 0) str.append(color).append(", ").append(color2);
             str.append(list.get(a));
         }

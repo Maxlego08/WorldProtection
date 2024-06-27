@@ -6,9 +6,11 @@ import fr.maxlego08.worldprotection.save.PlayerWorlds;
 import fr.maxlego08.worldprotection.world.VoidGenerator;
 import fr.maxlego08.worldprotection.zcore.enums.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -47,7 +49,11 @@ public class WorldManager extends ListenerAdapter {
         WorldCreator worldCreator = new WorldCreator(worldName);
         worldCreator.generator(new VoidGenerator());
 
-        Bukkit.createWorld(worldCreator);
+        World newWorld = Bukkit.createWorld(worldCreator);
+        if (newWorld != null) {
+            newWorld.getBlockAt(newWorld.getSpawnLocation()).getRelative(BlockFace.DOWN).setType(Material.BEDROCK);
+        }
+
         message(sender, Message.CREATE_CREATE, "%player%", offlinePlayer.getName());
 
         this.plugin.savePlayers();
@@ -102,7 +108,7 @@ public class WorldManager extends ListenerAdapter {
         cancel(event, player);
 
         if (event.isCancelled()) return;
-        
+
         if (Config.bypassPlayers.contains(player.getName())) return;
 
         try {
@@ -151,5 +157,80 @@ public class WorldManager extends ListenerAdapter {
         }
 
         player.teleport(bukkitWorld.getSpawnLocation());
+    }
+
+    private boolean doestHaveWorld(Player player) {
+
+        Optional<PlayerWorld> optional = plugin.getWorldManager().getWorld(player);
+        if (!optional.isPresent()) {
+            message(player, Message.WORLD_ERROR);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void addPlayer(Player player, OfflinePlayer offlinePlayer) {
+
+        if (doestHaveWorld(player)) return;
+
+        if (player == offlinePlayer) {
+            message(player, Message.WORLD_ADD_YOU, "%player%", offlinePlayer.getName());
+            return;
+        }
+
+        PlayerWorld playerWorld = plugin.getWorldManager().getWorld(player).get();
+
+        if (playerWorld.contains(offlinePlayer.getUniqueId())) {
+            message(player, Message.WORLD_ADD_ERROR, "%player%", offlinePlayer.getName());
+            return;
+        }
+
+        playerWorld.getAllowedPlayers().add(offlinePlayer.getUniqueId());
+        message(player, Message.WORLD_ADD_SUCCESS, "%player%", offlinePlayer.getName());
+
+        this.plugin.savePlayers();
+    }
+
+    public void removePlayer(Player player, OfflinePlayer offlinePlayer) {
+
+        if (doestHaveWorld(player)) return;
+
+        PlayerWorld playerWorld = plugin.getWorldManager().getWorld(player).get();
+
+        if (!playerWorld.contains(offlinePlayer.getUniqueId())) {
+            message(player, Message.WORLD_REMOVE_ERROR, "%player%", offlinePlayer.getName());
+            return;
+        }
+
+        playerWorld.getAllowedPlayers().remove(offlinePlayer.getUniqueId());
+        message(player, Message.WORLD_REMOVE_SUCCESS, "%player%", offlinePlayer.getName());
+
+        if (offlinePlayer.isOnline()) {
+            Player targetPlayer = offlinePlayer.getPlayer();
+            if (targetPlayer != null && targetPlayer.getWorld().getName().equals(playerWorld.getWorldName())) {
+                World world = Bukkit.getWorld(Config.defaultWorld);
+                if (world != null) {
+                    player.teleport(world.getSpawnLocation());
+                }
+            }
+        }
+
+        this.plugin.savePlayers();
+
+    }
+
+    public void sendList(Player player) {
+
+        if (doestHaveWorld(player)) return;
+
+        PlayerWorld playerWorld = plugin.getWorldManager().getWorld(player).get();
+        if (playerWorld.getAllowedPlayers().isEmpty()) {
+
+            message(player, Message.WORLD_LIST_EMPTY);
+        } else {
+
+            message(player, Message.WORLD_LIST, "%players%", toList(playerWorld.getAllowedPlayers().stream().map(Bukkit::getOfflinePlayer).map(OfflinePlayer::getName).collect(Collectors.toList())), "§f", "§7");
+        }
     }
 }

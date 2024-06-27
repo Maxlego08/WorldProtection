@@ -37,12 +37,23 @@ public enum Message {
 
     DESCRIPTION_RELOAD("Reload configuration files"),
     DESCRIPTION_CREATE("Create a new world"),
+    DESCRIPTION_ADD("Create a new world"),
+    DESCRIPTION_REMOVE("Create a new world"),
+    DESCRIPTION_LIST("Create a new world"),
 
     CREATE_ERROR_ALREADY("&cThe player already has a world, he cannot have a second one."),
     CREATE_CREATE("&aYou just created the world for the player &f%player%&a."),
 
     WORLD_NO_PERMISSION("&cYou don’t have permission to be around this world."),
     WORLD_DOESNT_EXIST("&cThe world &f%world% &cdoesn’t exist."),
+    WORLD_ERROR("&cYou have no world, you cannot execute this command."),
+    WORLD_ADD_YOU("&cYou can’t add yourself to your world."),
+    WORLD_ADD_ERROR("&cPlayer &f%player%&c already has access to your world."),
+    WORLD_ADD_SUCCESS("&aYou just added the &f%player%&a player in your world."),
+    WORLD_REMOVE_ERROR("&cPlayer &f%player%&c doesnt have access to your world."),
+    WORLD_REMOVE_SUCCESS("&aYou just removed the &f%player%&a player in your world."),
+    WORLD_LIST("&aPlayers&8: &f%players%"),
+    WORLD_LIST_EMPTY("&aPlayers&8: &cEmpty"),
 
     ;
 

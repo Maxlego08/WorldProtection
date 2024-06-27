@@ -26,4 +26,8 @@ public class PlayerWorld {
     public String getWorldName() {
         return worldName;
     }
+
+    public boolean contains(UUID uniqueId) {
+        return this.allowedPlayers.contains(uniqueId);
+    }
 }
