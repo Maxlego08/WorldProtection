@@ -23,6 +23,9 @@ public class PlayerWorld {
         // Default rules
         this.rules.put(WorldRules.BLOCK_PHYSIC, Rules.DENIED);
         this.rules.put(WorldRules.EXPLOSION, Rules.DENIED);
+        this.rules.put(WorldRules.LEAVES_DECAY, Rules.DENIED);
+        this.rules.put(WorldRules.BLOCK_BURN, Rules.DENIED);
+        this.rules.put(WorldRules.STRUCTURE_GROW, Rules.ALLOWED);
     }
 
     public UUID getUniqueId() {

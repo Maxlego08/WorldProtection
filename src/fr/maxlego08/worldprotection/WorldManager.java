@@ -76,6 +76,8 @@ public class WorldManager extends ListenerAdapter {
             placeBlock(block, BlockFace.SOUTH);
             placeBlock(block, BlockFace.SOUTH_EAST);
             placeBlock(block, BlockFace.SOUTH_WEST);
+            placeBlock(block, BlockFace.WEST);
+            placeBlock(block, BlockFace.EAST);
         }
 
         message(sender, Message.CREATE_CREATE, "%player%", offlinePlayer.getName());
@@ -187,7 +189,12 @@ public class WorldManager extends ListenerAdapter {
         }
 
         Player player = (Player) sender;
-        List<String> worldNames = getWorlds(player.getUniqueId()).stream().map(PlayerWorld::getWorldName).collect(Collectors.toList());
+        List<String> worldNames;
+        if (Config.bypassPlayers.contains(player.getName())) {
+            worldNames = PlayerWorlds.worlds.stream().map(PlayerWorld::getWorldName).collect(Collectors.toList());
+        } else {
+            worldNames = getWorlds(player.getUniqueId()).stream().map(PlayerWorld::getWorldName).collect(Collectors.toList());
+        }
         worldNames.add(Config.defaultWorld);
 
         return worldNames;
@@ -311,8 +318,14 @@ public class WorldManager extends ListenerAdapter {
         }
     }
 
+    /**
+     * Sets the rules for the player's world.
+     *
+     * @param player     the player whose world rules are being set.
+     * @param worldRules the world rule to set.
+     * @param rules      the rule value to set.
+     */
     public void setWorldRules(Player player, WorldRules worldRules, Rules rules) {
-
         if (doesNotHaveWorld(player)) return;
 
         PlayerWorld playerWorld = plugin.getWorldManager().getWorld(player).get();
@@ -321,12 +334,19 @@ public class WorldManager extends ListenerAdapter {
         message(player, Message.WORLD_RULES_SET, "%rule%", name(worldRules.name()), "%value%", name(rules.name()));
     }
 
+    /**
+     * Sends the current rules of the player's world to the player.
+     *
+     * @param player the player to whom the rules are sent.
+     */
     public void sendRules(Player player) {
-
         if (doesNotHaveWorld(player)) return;
 
         PlayerWorld playerWorld = plugin.getWorldManager().getWorld(player).get();
-        playerWorld.getRules().forEach((worldRule, rule) -> message(player, Message.WORLD_RULES_INFO, "%rule%", name(worldRule.name()), "%value%", (rule == Rules.ALLOWED ? "§a" : "§c") + name(rule.name())));
-
+        playerWorld.getRules().forEach((worldRule, rule) ->
+                message(player, Message.WORLD_RULES_INFO, "%rule%", name(worldRule.name()), "%value%",
+                        (rule == Rules.ALLOWED ? "§a" : "§c") + name(rule.name())
+                )
+        );
     }
 }
